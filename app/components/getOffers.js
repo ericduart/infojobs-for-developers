@@ -7,7 +7,7 @@ const headers = {
 const revalidateTime = 5 * 60
 
 async function getOfferById (offerId) {
-  const resOffer = await fetch(`https://api.infojobs.net/api/9/offer/${offerId}`, { headers, next: { revalidate: revalidateTime } })
+  const resOffer = await fetch(`https://api.infojobs.net/api/9/offer/${offerId}`, { headers, cache: 'no-store' })
 
   return await resOffer.json()
 }
@@ -18,7 +18,7 @@ async function getSkillsByArrOfIds (arrOffersIds) {
   for (let i = 0; i < arrOffersIds.length; i++) {
     const offerId = arrOffersIds[i]
 
-    const resOffer = await fetch(`https://api.infojobs.net/api/9/offer/${offerId}`, { headers, next: { revalidate: revalidateTime } })
+    const resOffer = await fetch(`https://api.infojobs.net/api/9/offer/${offerId}`, { headers, cache: 'no-store' })
     const dataOffer = await resOffer.json()
 
     arrSkills.push({
@@ -33,7 +33,7 @@ async function getSkillsByArrOfIds (arrOffersIds) {
 async function getOffersWithSkills (province = false, page = 1) {
   const arrOffers = { pagePosition: page, offers: [], skills: [] }
 
-  const resOffers = await fetch(`https://api.infojobs.net/api/9/offer?subcategory=programacion${province ? `&province=${province}` : ''}&page=${page}`, { headers, next: { revalidate: revalidateTime } })
+  const resOffers = await fetch(`https://api.infojobs.net/api/9/offer?subcategory=programacion${province ? `&province=${province}` : ''}&page=${page}`, { headers, cache: 'no-store' })
 
   const dataOffers = await resOffers.json()
 
@@ -56,7 +56,7 @@ async function getOffersWithSkills (province = false, page = 1) {
 }
 
 async function getProvincesOfOffers () {
-  const res = await fetch('https://api.infojobs.net/api/1/dictionary/province', { headers, next: { revalidate: revalidateTime } })
+  const res = await fetch('https://api.infojobs.net/api/1/dictionary/province', { headers, cache: 'no-store' })
 
   const provinces = await res.json()
 
@@ -64,7 +64,7 @@ async function getProvincesOfOffers () {
 }
 
 async function getExperienceMin () {
-  const res = await fetch('https://api.infojobs.net/api/1/dictionary/experience-min', { headers, next: { revalidate: revalidateTime } })
+  const res = await fetch('https://api.infojobs.net/api/1/dictionary/experience-min', { headers, cache: 'no-store' })
 
   return await res.json()
 }
@@ -80,7 +80,7 @@ async function getOffersBySkillAndProvince (userSkill, provinceData, hardSearch)
   const loop = hardSearch ? 5 : 2
 
   for (let i = 1; i <= loop; i++) {
-    const res = await fetch(`https://api.infojobs.net/api/9/offer?subcategory=programacion&page=${i}${useProvince ? `&province=${key}` : ''}&maxResults=50`, { headers, next: { revalidate: revalidateTime } })
+    const res = await fetch(`https://api.infojobs.net/api/9/offer?subcategory=programacion&page=${i}${useProvince ? `&province=${key}` : ''}&maxResults=50`, { headers, cache: 'no-store' })
 
     const offersData = await res.json()
     let { offers, totalPages, currentPage } = offersData
@@ -108,7 +108,7 @@ async function getTopNewestOffers (totalPages) {
   const arrOffers = { offers: [], skills: [] }
 
   for (let i = 1; i <= totalPages; i++) {
-    const res = await fetch(`https://api.infojobs.net/api/9/offer?subcategory=programacion&page=${i}&maxResults=50`, { headers, next: { revalidate: revalidateTime } })
+    const res = await fetch(`https://api.infojobs.net/api/9/offer?subcategory=programacion&page=${i}&maxResults=50`, { headers, cache: 'no-store' })
     const offersRes = await res.json()
     const offersSkills = await getSkillsByArrOfIds(offersRes.offers.map(offer => offer.id))
 
