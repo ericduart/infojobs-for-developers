@@ -2,7 +2,7 @@ import { getTopNewestOffers } from '@/app/components/getOffers.js'
 import Link from 'next/link'
 
 export default async function Skills () {
-  const latestOffersData = await getTopNewestOffers(4)
+  const latestOffersData = await getTopNewestOffers(2)
   const arrSkills = []
 
   latestOffersData.skills.forEach(skillsByOffer => {
