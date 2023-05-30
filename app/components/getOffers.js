@@ -108,7 +108,7 @@ async function getTopNewestOffers (totalPages) {
   const arrOffers = { offers: [], skills: [] }
 
   for (let i = 1; i <= totalPages; i++) {
-    const res = await fetch(`https://api.infojobs.net/api/9/offer?subcategory=programacion&page=${i}`, { headers, next: { revalidate: revalidateTime } })
+    const res = await fetch(`https://api.infojobs.net/api/9/offer?subcategory=programacion&page=${i}&maxResults=50`, { headers, next: { revalidate: revalidateTime } })
     const offersRes = await res.json()
     const offersSkills = await getSkillsByArrOfIds(offersRes.offers.map(offer => offer.id))
 

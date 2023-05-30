@@ -12,7 +12,7 @@ export default async function SkillInfo ({ params }) {
 
   id = decodeURIComponent(id)
 
-  const latestOffersData = await getTopNewestOffers(10)
+  const latestOffersData = await getTopNewestOffers(4)
 
   const skillsById = latestOffersData.skills.filter(skill => skill.skills.some(el => el.toLowerCase() === id.toLowerCase()))
   const filteredOffers = latestOffersData.offers.filter(offer => typeof skillsById.find(skill => offer.id === skill.offerId) !== 'undefined')
