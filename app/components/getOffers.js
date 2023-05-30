@@ -4,8 +4,6 @@ const headers = {
   Authorization: `Basic ${INFOJOBS_TOKEN}`
 }
 
-const revalidateTime = 5 * 60
-
 async function getOfferById (offerId) {
   const resOffer = await fetch(`https://api.infojobs.net/api/9/offer/${offerId}`, { headers, cache: 'no-store' })
 
